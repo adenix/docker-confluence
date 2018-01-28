@@ -10,7 +10,6 @@ RUN \
   mkdir -p                "${CONFLUENCE_HOME}" && \
   mkdir -p                "${CONFLUENCE_HOME}/caches/indexes" && \
   chmod -R 700            "${CONFLUENCE_HOME}" && \
-  chown -R daemon:daemon  "${CONFLUENCE_HOME}" && \
   mkdir -p                "${CONFLUENCE_INSTALL}/conf/Catalina &&" && \
   curl -Ls                "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz" | tar -xz --directory "${CONFLUENCE_INSTALL}" --strip-components=1 --no-same-owner && \
   curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONFLUENCE_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" && \
@@ -32,15 +31,14 @@ RUN \
   echo -e                 "\nconfluence.home=$CONFLUENCE_HOME" >> "${CONFLUENCE_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" && \
   touch -d "@0"           "${CONFLUENCE_INSTALL}/conf/server.xml"
 
-USER daemon:daemon
-
 EXPOSE 8090
 
 VOLUME ["${CONFLUENCE_HOME}", "${CONFLUENCE_INSTALL}/logs"]
 
 WORKDIR $CONFLUENCE_HOME
 
-COPY "docker-entrypoint.sh" "/"
+COPY "docker-entrypoint.sh" "/docker-entrypoint.sh"
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/var/opt/atlassian/confluence/bin/catalina.sh", "run"]
 
