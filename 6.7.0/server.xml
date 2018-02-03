@@ -23,16 +23,17 @@
       </Engine>
 
 <!--SSL
-    <Connector port="8443" maxHttpHeaderSize="8192"
-       maxThreads="150" minSpareThreads="25"
-       protocol="org.apache.coyote.http11.Http11NioProtocol"
-       enableLookups="false" disableUploadTimeout="true"
-       acceptCount="100" scheme="https" secure="true"
-       clientAuth="false" sslProtocol="TLSv1.2"
-       sslEnabledProtocols="TLSv1.2" SSLEnabled="true"
-       URIEncoding="UTF-8" keyAlias="${catalinaConnectorKeyAlias}"
-       keystoreFile="${catalinaConnectorKeystore}"
-       keystorePass="${catalinaConnectorKeystorePassword}"/>
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+      maxHttpHeaderSize="8192" SSLEnabled="true"
+      maxThreads="150" minSpareThreads="25"
+      enableLookups="false" disableUploadTimeout="true"
+      acceptCount="100" scheme="https" secure="true"
+      clientAuth="false" sslProtocol="TLSv1.2" useBodyEncodingForURI="true"
+      keystoreType="${catalinaConnectorKeystoreType}"
+      truststoreType="${catalinaConnectorTruststoreType}"
+      keyAlias="${catalinaConnectorKeyAlias}"
+      keystoreFile="${catalinaConnectorKeystore}"
+      keystorePass="${catalinaConnectorKeystorePassword}"/>
 SSL-->
   </Service>
 </Server>
